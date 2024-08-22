@@ -1,0 +1,59 @@
+# Configuração Heap
+javaOpts: >-
+  -Xms32m -Xmx64m
+  -DdataSource.url=jdbc:postgresql://148.113.137.26:5432/bolsa
+  -Dzgsolucoes.backgroundTask.threadPool=150
+replicaCount: 1
+image:
+  repository: rafaelcsousa/app-ps-sre
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: app-ps-sre-jeferson-candido.zeroglosa.com.br
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+resources:
+   limits:
+     cpu: 1
+     memory: 570M
+   requests:
+     cpu: 100m
+     memory: 200M
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
