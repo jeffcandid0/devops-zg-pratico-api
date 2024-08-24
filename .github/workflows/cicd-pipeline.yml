@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    runs-on: debian-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.0
+
+      - name: Terraform Init
+        working-directory: ./path/to/terraform/directory
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: ./path/to/terraform/directory
+        run: terraform apply -auto-approve
+
+  ansible:
+    runs-on: debian-latest
+    needs: terraform
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Ansible
+        run: sudo apt-get update && sudo apt-get install ansible -y
+
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i localhost, -c local ./path/to/ansible/playbook.yml
+
+  testing:
+    runs-on: debian-latest
+    needs: ansible
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run k6 Load Tests
+        run: k6 run ./path/to/k6.js
+
