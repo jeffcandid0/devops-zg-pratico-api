@@ -1,0 +1,3 @@
+- name: Configure circuit breakers with Helm
+  command: helm upgrade --install {{ release_name }} /home/jeferson/devops-zg-pratico-api/app/chart --namespace {{ namespace }} --set circuitBreaker.enabled=true --set retries.maxAttempts=3
+

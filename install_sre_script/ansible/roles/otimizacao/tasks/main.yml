@@ -1,0 +1,3 @@
+- name: Deploy optimized Helm configuration
+  command: helm upgrade --install {{ release_name }} /home/jeferson/devops-zg-pratico-api/app/chart --namespace {{ namespace }} --set image.tag={{ image_tag }} --set resources.requests.memory=512Mi --set resources.requests.cpu=200m
+

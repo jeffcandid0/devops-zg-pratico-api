@@ -1,0 +1,25 @@
+
+- hosts: localhost
+  vars: 
+    release_name: sre-app-zg
+    namespace: sre-app-zg-namespace
+    image_tag: latest
+
+    roles:
+      - otimizacao
+      - fault_tolerance
+      - monitoramento
+ 
+  tasks:
+    - name: Create Kubernetes Namespace
+      command: kubectl create namespace {{namespace}}
+      ignore_errors: true # Ignorara o erro se o namespace ja existir
+
+    - name: Deploy application using Helm
+      command: helm upgrade --install {{ release_name }} /home/jeferson/devops-zg-pratico-api/app/chart --namespace {{ namespace }} --set image.tag={{ image_tag }} --set resources.requests.memory=256Mi --set resources.requests.cpu=100m --set circuitBreaker.enabled=true --set retries.maxAttempts=3
+
+    - name: Configure HPA for the application
+      command: kubectl apply -f /path/to/hpa.yaml -n {{ namespace }}
+    
+    - name: Run load tests
+      command: k6 run /home/jeferson/devops-zg-pratico-api/app/k6.js

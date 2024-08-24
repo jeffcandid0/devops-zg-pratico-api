@@ -1,0 +1,20 @@
+stages:
+  - terraform
+  - ansible
+  - testing
+
+terraform:
+  stage: terraform
+  script:
+    - terraform init
+    - terraform apply -auto-approve
+
+ansible:
+  stage: ansible
+  script:
+    - ansible-playbook playbook.yml
+
+testing:
+  stage: testing
+  script:
+    - k6 run /home/jeferson/devops-zg-pratico-api/k6.js

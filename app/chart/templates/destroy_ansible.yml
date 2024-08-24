@@ -1,0 +1,13 @@
+- hosts: localhost
+  tasks:
+    - name: Delete the deployment
+      command: kubectl delete deployment sre-app-zg-app-ps-sre -n sre-app-zg-namespace
+      ignore_errors: true  # Ignora erros se o deployment não for encontrado
+
+    - name: Delete the service
+      command: kubectl delete service sre-app-lb -n sre-app-zg-namespace
+      ignore_errors: true  # Ignora erros se o deployment não for encontrado
+
+    - name: Delete the namespace
+      command: kubectl delete namespace sre-app-zg-namespace
+      ignore_errors: true  # Ignora erros se o deployment não for encontrado

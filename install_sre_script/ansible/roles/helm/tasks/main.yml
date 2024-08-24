@@ -1,0 +1,3 @@
+
+- name: Deploy application with Helm
+  command: helm install {{ release_name }} /home/jeferson/devops-zg-pratico-api/app/chart --namespace {{ namespace }}
