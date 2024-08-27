@@ -1,0 +1,69 @@
+1. Escalabilidade e Redundância
+
+Solução Anterior:
+
+Configuração: A aplicação era executada em um único pod, o que limitava a capacidade de escalamento e criava pontos de falha únicos.
+
+Problema: O sistema enfrentava gargalos de desempenho, especialmente sob carga elevada, devido à falta de capacidade de escalonamento automático e redundância.
+
+Solução Implementada:
+
+Melhoria: Introdução de múltiplos pods para a aplicação, com balanceamento de carga e escalonamento automático via Horizontal Pod Autoscaler (HPA).
+
+Justificativa: Isso garante que a aplicação possa escalar horizontalmente para lidar com aumentos de demanda, além de oferecer redundância para melhorar a disponibilidade e evitar pontos de falha únicos.
+
+2. Resiliência e Tolerância a Falhas
+
+Solução Anterior:
+
+Configuração: A infraestrutura não possuía replicação ou failover para o Ingress Controller e o banco de dados, tornando-a vulnerável a falhas.
+
+Problema: Falhas em componentes críticos levavam ao downtime da aplicação, impactando negativamente a experiência do usuário.
+
+Solução Implementada:
+
+Melhoria: Implementação de réplicas para o Ingress Controller e configuração de replicação assíncrona no banco de dados PostgreSQL, com uma réplica de leitura.
+
+Justificativa: A replicação e o failover automático garantem que a aplicação continue operando mesmo em caso de falha em uma das instâncias, aumentando a resiliência da infraestrutura.
+
+3. Monitoramento e Observabilidade
+
+Solução Anterior:
+
+Configuração: A infraestrutura carecia de ferramentas robustas para monitoramento em tempo real e análise centralizada de logs.
+
+Problema: A falta de monitoramento adequado dificultava a identificação e resolução rápida de problemas, resultando em maior tempo de inatividade e respostas lentas.
+
+Solução Implementada:
+
+Melhoria: Integração de Prometheus e Grafana para monitoramento em tempo real, e implementação da stack ELK (Elasticsearch, Logstash, Kibana) para centralização de logs.
+
+Justificativa: Isso proporciona visibilidade total sobre a performance da aplicação e facilita a identificação proativa de problemas, permitindo uma resolução mais rápida e eficiente.
+
+4. Desempenho e Otimização de Conexão
+
+Solução Anterior:
+
+Configuração: As conexões com o banco de dados não eram otimizadas e não havia uso de cache, resultando em falhas frequentes e tempos de resposta elevados.
+
+Problema: A experiência do usuário era prejudicada pela lentidão nas respostas da aplicação, especialmente durante picos de carga.
+
+Solução Implementada:
+
+Melhoria: Otimização das conexões de banco de dados e implementação de cache Redis para acelerar as respostas das consultas SQL.
+
+Justificativa: Essas mudanças melhoram significativamente os tempos de resposta da aplicação, reduzindo a latência e melhorando a experiência do usuário final.
+
+5. Load Balancers para Alta Disponibilidade
+
+Solução Anterior:
+
+Configuração: O tráfego era gerenciado de forma simples, sem um balanceamento de carga robusto.
+
+Problema: A aplicação poderia se tornar indisponível em cenários de alta demanda ou falhas de componentes específicos, devido à falta de um sistema de balanceamento de carga eficiente.
+
+Solução Implementada:
+
+Melhoria: Introdução de Load Balancers externos para gerenciar o tráfego de entrada, distribuindo-o de forma equilibrada entre os pods e as zonas de disponibilidade.
+
+Justificativa: Os Load Balancers garantem que a aplicação esteja sempre disponível e funcionando de forma eficiente, mesmo sob alta demanda ou em caso de falha em uma zona de disponibilidade.
