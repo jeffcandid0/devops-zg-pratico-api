@@ -7,5 +7,5 @@ variable "kubeconfig" {
 variable "cluster_name" {
   description = "Name of the Kubernetes cluster"
   type        = string
-  default     = "my-cluster"
+  default     = "sre-devops"
 }
